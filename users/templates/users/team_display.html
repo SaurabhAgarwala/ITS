@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% load static %}
+
+<title>Team Details - Issue Tracker System</title> 
+
+{% block one %}
+<div class="w3-row-padding w3-center w3-padding-64" id="contents">
+    <h1 id="detailhead"><u>{{ team.name }}</u></h1>
+    {% ifequal team.created_by user.username %}
+        <p>This team was created by <strong>you</strong> on <strong>{{ team.created_on }}</strong></p>
+        <a href="{% url 'users:team-edit' id=team.pk %}#contents"><input type="button" value="Edit this team" class="w3-button w3-center w3-theme"></a>&nbsp;
+        <a href="{% url 'users:team-delete' id=team.pk %}#contents"><input type="button" value="Delete this team" class="w3-button w3-center w3-theme"></a>
+    {% else %}
+        <p>This team was created by <strong>{{ team.created_by }}</strong> on <strong>{{ team.created_on }}</strong></p>
+    {% endifequal %}
+    {% if team.repository %}   
+        <p>Project is available at <a href="{{ team.repository }}" target="_blank">{{ team.repository }}</a></p>
+    {% endif %}            
+    <div>
+        <p><strong><u>Members of this team:</u></strong></u></p>
+        <ul>
+        {% for user in users %}
+            {{ user.username }}<br>
+        {% endfor %}
+        </ul>
+    </div>
+    <div>
+        {% if issues %}
+            <p><strong>The following are the issues linked with this team. Click on any of the issue to get more details about it.</strong></p>
+            <ul>
+            {% for issue in issues %}
+                <a href="{% url 'issues:issue-disp' id=issue.id %}">
+                    {{ issue.title }}{% if issue.team %} - {{ issue.team }}{% endif %}.
+                    {% if issue.deadline %} To be completed by {{ issue.deadline }} {% endif %}.
+                    Assigned by - {{ issue.created_by }}. 
+                    Current Status - {{ issue.status }}
+                </a><br>
+            {% endfor %}
+            </ul>   
+        {% else %}
+            <p><strong>There are no issues associated with this team.</strong></p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

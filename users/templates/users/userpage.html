@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% load static %}
+
+<title>Issue Tracker System</title>
+
+{% block one %}
+<div style="width: 80%; margin: 3% 10% 3% 10%" id="contents">
+    <div>
+        {% if issues %}
+            <h3>The following are the issues that you have been assigned. Click on any of the issue to get more  details about it.</h3>
+            <ul>
+            {% for issue in issues %}  
+                <li>
+                    <a href="{% url 'issues:issue-disp' id=issue.id %}#contents">
+                        {{ issue.title }}{% if issue.team %} - {{ issue.team }}{% endif %}.
+                        {% if issue.deadline %} To be completed by {{ issue.deadline }} {% endif %}.
+                        Assigned by - {{ issue.created_by }}. 
+                        Current Status - {{ issue.status }}
+                    </a>
+                </li>
+            {% endfor %}
+            </ul>   
+        {% else %}
+            <h3>You have been assigned no issues</h3>
+        {% endif %}
+    </div>
+    <div>
+        {% if teams %}
+            <h3>You are a member of the following teams. Click on any of the team to see the issues in that team.</h3>
+        {% for team in teams %}
+        <li>
+            <a href="{% url 'users:team-disp' id=team.id %}#contents">{{ team.name }}</a>
+        </li>
+        {% endfor %}
+        {% else %}
+        <h3>
+            You are not a member of any team.
+        </h3>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

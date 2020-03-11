@@ -1,0 +1,36 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta-charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" type="text/css" href="{% static 'styles.css' %}">
+        <link href="https://fonts.googleapis.com/css?family=Arvo|Tangerine" rel="stylesheet">
+        <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+        <link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-black.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    </head>
+    <body id="myPage">
+            <div class="w3-top">
+                <div class="w3-bar w3-theme-d2 w3-left-align">
+                     <a class="w3-bar-item w3-button w3-hide-medium w3-hide-large w3-right w3-hover-white w3-theme-d2" href=""><i class="fa fa-bars"></i></a>
+                     <a href="{% url 'users:userpage' %}#contents" class="w3-bar-item w3-button w3-teal"><i class="fa fa-home w3-margin-right"></i>User HomePage</a>
+                </div>
+            </div>
+            <div class="w3-display-container w3-animate-opacity">
+                <img src="{% static 'bg.jpeg' %}" alt="background" style="width:100%;min-height:350px;max-height:675px;">
+                <div class="w3-container w3-display-bottomleft w3-margin-bottom">
+                <a href="{% url 'users:userpage' %}#contents"><button class="w3-button w3-xxxlarge w3-theme w3-hover-teal" title="Go To Homepage">Issue Tracker System</button></a>
+                </div>
+            </div>
+        </header>        
+        <div class="wrap">
+            {% block one %}
+            {% endblock %}
+        </div>
+        </div>
+    </body>
+</html>

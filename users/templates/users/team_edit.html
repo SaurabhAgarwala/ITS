@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block one %}
+<title>Edit Team - Issue Tracker System</title>
+
+<div class="w3-row-padding w3-center w3-padding-64" id="contents">
+    <h2><u>Edit Team</u></h2>
+    <p>Change team details:</p><br>
+    <div class="w3-col s12 m12" style="text-align: center; margin: 0 auto;">
+    <form class="w3-container w3-card-4 w3-padding-16 w3-white form-horizontal" action="{% url 'users:team-edit' id=team.id %}#contents" method="POST" style="margin-left: 15%; margin-right: 15%; width: 70%;">
+        {% csrf_token %}
+        {{ form.as_p }}
+        {% if request.GET.next %}
+            <input type="hidden" name="next" value="{{ request.GET.next }}">
+        {% endif %}
+        <input type="submit" class="w3-button w3-right w3-theme" value="Edit Team">
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,91 @@
+{% extends 'base.html' %}
+{% load static %}
+
+<title>Issue Details - Issue Manager</title> 
+
+{% block one %}
+<div class="w3-row-padding w3-center w3-padding-64" id="contents">
+    <h1 id="detailhead"><u>Issue Title: {{ issue.title }}</u></h1>
+    {% if issue.team %}
+    <h2>
+        Team: {{ issue.team }}
+    </h2>
+    {% endif %}
+    {% ifequal issue.created_by user.username %}
+        <p>Created By: <strong>You Yourself</strong></p>
+        <a href="{% url 'issues:issue-edit' id=issue.pk %}#contents"><input type="button" value="Edit this issue" class="w3-button w3-center w3-theme"></a>&nbsp;
+        <a href="{% url 'issues:issue-delete' id=issue.pk %}#contents"><input type="button" value="Delete this issue" class="w3-button w3-center w3-theme"></a>
+    {% else %}
+        <p>Created By: <strong>{{ issue.created_by }}</strong></p>
+    {% endifequal %}
+    <p>
+        Created On: <strong>{{ issue.created_on }}</strong>
+    </p>
+    <p>
+        Deadline: <strong>{{ issue.deadline }}</strong>
+    </p>
+    <div>
+        <p><u>Issue Description:</u><br>
+            {{ issue.description }}</p>
+    </div>
+    <div>
+        <p><strong><u>Assigned To:</u></strong></p>
+        <ul>
+        {% for user in assignees %}
+            {% ifequal issue.created_by user.username %}
+                You<br>
+            {% else %}
+                {{ user.username }}<br>
+            {% endifequal %}
+        {% endfor %}
+        </ul>
+    </div>
+    <p>
+        <b>Current Status:</b> <u>{{ issue.status }}</u>
+    </p>
+    <div>
+        <h2><u>Comments:</u></h2>
+        {% if comments %}
+            {% for comment in comments %}
+                <h4 style="margin-bottom: -2%;"><u>Title: {{ comment.title }}</u></h4><br>
+                <p>{% ifequal comment.user request.user %}
+                    <b>You:</b> 
+                {% else %}
+                    <b>{{ comment.user }}: </b>
+                {% endifequal %}
+                {{ comment.content }}
+                 - <em> {{ comment.timestamp }}</em>
+                </p>
+                {% if comment.commentreply_set.all %}
+                <h5><em>Replies:</em></h5>
+                    {% for commentreply in comment.commentreply_set.all %}
+                        <p>{% ifequal commentreply.user request.user %}
+                                <b>You: </b>
+                            {% else %}
+                                <b>{{ commentreply.user }}: </b>
+                            {% endifequal %}
+                            {{ commentreply.content }} -  <em>{{ commentreply.timestamp }}</em>
+                        </p>            
+                    {% endfor %}
+                {% endif %}
+                <form style="margin-bottom: 2%;" class="commentreply_form" action="{% url 'issues:comment-reply' num=comment.id %}#contents" method="post">
+                    {% csrf_token %}
+                    {{ commentreplyform.as_p }}
+                    <br>
+                    <input type="submit" value="Reply to this Comment" class="w3-button w3-center w3-theme" style="margin-top: -3%;">
+                </form>
+            {% endfor %}
+            </ul>
+        {% else %}
+        <p>No comments present</p>
+        {% endif %}
+        <h3><b>Create New Comment:</h3>
+        <form class="comment_form" action="{% url 'issues:comment' num=issue.pk %}#contents" method="post">
+            {% csrf_token %}
+            {{ commentform.as_p }}
+            <input type="submit" value="Comment" class="w3-button w3-center w3-theme">
+        </b>
+        </form>
+    </div>
+    
+{% endblock %}
