@@ -9,9 +9,9 @@
     <h2><u>Create Issue</u></h2>
     <p>Enter issue details:</p><br>
     <div class="w3-col s12 m12" style="text-align: center; margin: 0 auto;">
-    <form class="w3-container w3-card-4 w3-padding-16 w3-white form-horizontal" action="{% url 'issues:new-teamissue' %}#contents" method="post" style="margin-left: 15%; margin-right: 15%; width: 70%;">
+    <form class="w3-container w3-card-4 w3-padding-16 w3-white form-horizontal" action="{% url 'issues:new-teamissue' team=team.pk %}#contents" method="post" style="margin-left: 15%; margin-right: 15%; width: 70%;">
         {% csrf_token %}
-        {{ form.as_p }}
+        {% include 'bs4_form.html' with form=form %}
         {% if request.GET.next %}
             <input type="hidden" name="next" value="{{ request.GET.next }}">
         {% endif %}

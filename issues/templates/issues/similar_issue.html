@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% load static %}
+
+<title>Issue Tracker System</title>
+
+{% block one %}
+<div style="width: 80%; margin: 3% 10% 3% 10%" id="contents">
+    <div>
+        <h3>The following are the issues that are similar to the one you want to create. Review them to avoid redundancy</h3>
+        <ul>
+        {% for issue in similar_issues %}  
+            <li>
+                <a href="{% url 'issues:issue-disp' id=issue.id %}#contents">
+                    {{ issue.title }}{% if issue.team %} - {{ issue.team }}{% endif %}.</a> <br>
+                    Issue Description: {{ issue.description }} <br>
+                    {% if issue.deadline %} To be completed by {{ issue.deadline }} {% endif %}.
+                    Assigned by - {{ issue.created_by }}. 
+                    Current Status - {{ issue.status }}
+            </li>
+        {% endfor %}
+        </ul>   
+    </div>
+    <div>
+        {% if team %}
+            <form action="{% url 'issues:create-teamissue' %}#contents" method="post">
+                {% csrf_token %}
+                <input type="hidden" value="{{ old_request_params }}" name="old_request_params">
+                <input type="hidden" value="{{ assignees }}" name="assignees">
+                <input type="hidden" value="{{ analysed_text_params }}" name="analysed_text_params">
+                <input name="team" type="hidden" value="{{ team }}">
+                <a href="{% url 'users:userpage' %}#contents"><input type="button" value="Discard and return to Home Page" class="w3-button w3-center w3-theme"></a>&nbsp;
+                <input type="submit" value="Create Issue Anyway" class="w3-button w3-center w3-theme"></a>
+            </form>
+        {% else %}
+            <form action="{% url 'issues:create-selfassignedissue' %}#contents" method="post">
+                {% csrf_token %}
+                <input type="hidden" value="{{ old_request_params }}" name="old_request_params">
+                <input type="hidden" value="{{ analysed_text_params }}" name="analysed_text_params">
+                <a href="{% url 'users:userpage' %}#contents"><input type="button" value="Discard and return to Home Page" class="w3-button w3-center w3-theme"></a>&nbsp;
+                <input type="submit" value="Create Issue Anyway" class="w3-button w3-center w3-theme"></a>
+            </form>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

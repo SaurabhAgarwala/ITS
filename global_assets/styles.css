@@ -24,3 +24,7 @@
 li{
     list-style-type: square;
 }
+
+form li {
+    list-style-type: none;
+}

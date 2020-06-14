@@ -9,7 +9,7 @@
     <h1 id="detailhead">Create Comment</h1>
     <form class="comment_form" action="{% url 'issues:comment' num=issue_id %}" method="post">
         {% csrf_token %}
-        {{ form.as_p }}
+        {% include 'bs4_form.html' with form=form %}
         <input type="submit" value="Comment">
     </form>
 </body>

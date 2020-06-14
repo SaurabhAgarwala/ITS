@@ -1,6 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import User
 from users.models import Team
+from django_mysql.models import ListCharField
+
 
 # Create your models here.
 STATUS = (
@@ -11,8 +13,9 @@ STATUS = (
 
 class Issue(models.Model):
     team = models.ForeignKey(Team,on_delete=models.CASCADE, null=True, blank=True)
-    title = models.CharField(max_length=100)
-    description = models.TextField()
+    title = models.CharField(max_length=250)
+    description = models.TextField(blank=True)
+    text_analysis_params = models.TextField(blank=True)
     assignee = models.ManyToManyField(User)
     status = models.CharField(max_length=15,choices=STATUS, default='Planned')
     deadline = models.DateField(blank=True, null=True)   

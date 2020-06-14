@@ -1,0 +1,12 @@
+Add Readme to the Issue Tracker System project
+The Issue Tracker System project is completed, but does not have a README yet. This makes it difficult for people looking it for the first time. Add the necessary details in the readme of the GitHub repo
+
+Issue Tracker System project requires readme
+It is difficult to understand about the Issue Tracker System project currently. So a README has to be added to in the GitHub repo to give the necessary details
+
+
+Bug: When converting a django form request dictionary containing ManyToMany field to json, the values having lists returns only last value
+Solution: Convert the request dictionary to a python dictionary and then dump it using json. This will parse all the values of the list as value of key in a dictionary
+
+A bug is present such that for the values having lists in a django form request dictionary containing ManyToMany field is converted to json, then only last value is returned
+A possible solution to parse all the values of the list which is a value of a key in a dictionary is by first converting the request dictionary to a python dictionary and then dump it as json

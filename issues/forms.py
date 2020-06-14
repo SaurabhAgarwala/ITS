@@ -25,7 +25,7 @@ class GetTeamIssueForm(forms.ModelForm):
 class PostTeamIssueForm(forms.ModelForm):
     class Meta: 
         model = models.Issue
-        exclude = ['team','created_by','created_on']
+        exclude = ['team','created_by','created_on','text_analysis_params']
 
 class EditTeamIssueForm(forms.ModelForm):
     class Meta: 

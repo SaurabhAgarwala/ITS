@@ -25,7 +25,7 @@ SECRET_KEY = 'x$$zeu*zj_wuoly$)&(1gdr6(#6jzxu&=y+r#m_*ro@e&-5f$j'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -37,6 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django_mysql',
+    'widget_tweaks',
     'users.apps.UsersConfig',
     'issues.apps.IssuesConfig',
 ]
